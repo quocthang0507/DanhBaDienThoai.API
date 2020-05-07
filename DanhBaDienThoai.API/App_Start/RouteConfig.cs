@@ -14,12 +14,6 @@ namespace DanhBaDienThoai.API
 				url: "{controller}/{action}/{id}",
 				defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
 			);
-
-			//routes.MapRoute(
-			//	name: "CustomAPI",
-			//	url: "api/{controller}/{action}/{id}",
-			//	defaults: new { action = "get", id = UrlParameter.Optional }
-			//);
 		}
 	}
 }

@@ -33,6 +33,7 @@ namespace DanhBaDienThoai.API.Controllers
             return Ok(entity);
         }
 
+        [HttpGet]
         public IHttpActionResult GetByName(string name)
         {
             var entities = ThongTinLienHe.GetByName(name);
