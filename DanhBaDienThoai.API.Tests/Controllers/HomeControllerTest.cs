@@ -1,7 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using DanhBaDienThoai.API.Controllers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using DanhBaDienThoai.API;
-using DanhBaDienThoai.API.Controllers;
+using System.Web.Mvc;
 
 namespace DanhBaDienThoai.API.Tests.Controllers
 {

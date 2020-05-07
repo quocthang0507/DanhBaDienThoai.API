@@ -44,6 +44,9 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CBO.cs" />
+    <Compile Include="Classes\Accounts.cs" />
+    <Compile Include="Classes\DangNhap.cs" />
+    <Compile Include="Classes\ThongTinLienHe.cs" />
     <Compile Include="DataCache.cs" />
     <Compile Include="DataProvider.cs" />
     <Compile Include="Null.cs" />

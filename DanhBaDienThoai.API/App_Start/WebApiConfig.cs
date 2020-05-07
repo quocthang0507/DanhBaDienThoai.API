@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using DanhBaDienThoai.API.Models;
 using System.Web.Http;
 
 namespace DanhBaDienThoai.API
@@ -9,6 +7,9 @@ namespace DanhBaDienThoai.API
 	{
 		public static void Register(HttpConfiguration config)
 		{
+			// Basic authentication for websites
+			config.Filters.Add(new BasicAuthenticationAttribute());
+			
 			// Web API configuration and services
 
 			// Web API routes
