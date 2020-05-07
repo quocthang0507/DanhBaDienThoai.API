@@ -21,7 +21,7 @@ namespace DanhBaDienThoai.API.Models
 				actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
 				if (actionContext.Response.StatusCode == HttpStatusCode.Unauthorized)
 				{
-					actionContext.Response.Headers.Add("WWW-Authenticate", string.Format("Basic realm=\"{0}\"", Realm));
+					actionContext.Response.Headers.Add("WWW-Authenticate", string.Format("Basic realm=\"{0}\"", realm));
 				}
 			}
 			else

@@ -8,9 +8,8 @@ namespace DanhBaDienThoai.API.Models
 	{
 		public static bool Login(string username, string password)
 		{
-			Accounts accounts = new Accounts();
-			var list = accounts.GetAccounts();
-			return list.Any(acc => acc.username.Equals(username, StringComparison.OrdinalIgnoreCase) && acc.password == password)
+			var list = Accounts.GetAccounts();
+			return list.Any(acc => acc.username.Equals(username, StringComparison.OrdinalIgnoreCase) && acc.password == password);
 		}
 	}
 }

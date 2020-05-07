@@ -8,7 +8,7 @@ namespace DataAccess.Classes
 {
 	public class Accounts
 	{
-		public List<DangNhap> GetAccounts()
+		public static List<DangNhap> GetAccounts()
 		{
 			return DangNhap.GetAllAccounts();
 		}
