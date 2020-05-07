@@ -16,35 +16,42 @@ namespace DanhBaDienThoai.API.Models
 
 		public override void OnAuthorization(HttpActionContext actionContext)
 		{
-			if (actionContext.Request.Headers.Authorization == null)
+			try
 			{
-				actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
-				if (actionContext.Response.StatusCode == HttpStatusCode.Unauthorized)
+				if (actionContext.Request.Headers.Authorization == null)
 				{
-					actionContext.Response.Headers.Add("WWW-Authenticate", string.Format("Basic realm=\"{0}\"", realm));
-				}
-			}
-			else
-			{
-				string authenticationToken = actionContext.Request.Headers.Authorization.Parameter;
-				string decodedAuthenticationToken = Encoding.UTF8.GetString(Convert.FromBase64String(authenticationToken));
-				string[] usernamePasswordArray = decodedAuthenticationToken.Split(':');
-				string username = usernamePasswordArray[0];
-				string password = usernamePasswordArray[1];
-				if (UserValidate.Login(username, password))
-				{
-					var identity = new GenericIdentity(username);
-					IPrincipal principal = new GenericPrincipal(identity, null);
-					Thread.CurrentPrincipal = principal;
-					if (HttpContext.Current != null)
+					actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+					if (actionContext.Response.StatusCode == HttpStatusCode.Unauthorized)
 					{
-						HttpContext.Current.User = principal;
+						actionContext.Response.Headers.Add("WWW-Authenticate", string.Format("Basic realm=\"{0}\"", realm));
 					}
 				}
 				else
 				{
-					actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+					string authenticationToken = actionContext.Request.Headers.Authorization.Parameter;
+					string decodedAuthenticationToken = Encoding.UTF8.GetString(Convert.FromBase64String(authenticationToken));
+					string[] usernamePasswordArray = decodedAuthenticationToken.Split(':');
+					string username = usernamePasswordArray[0];
+					string password = usernamePasswordArray[1];
+					if (UserValidate.Login(username, password))
+					{
+						var identity = new GenericIdentity(username);
+						IPrincipal principal = new GenericPrincipal(identity, null);
+						Thread.CurrentPrincipal = principal;
+						if (HttpContext.Current != null)
+						{
+							HttpContext.Current.User = principal;
+						}
+					}
+					else
+					{
+						actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
+					}
 				}
+			}
+			catch (FormatException)
+			{
+				actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.Unauthorized);
 			}
 		}
 	}

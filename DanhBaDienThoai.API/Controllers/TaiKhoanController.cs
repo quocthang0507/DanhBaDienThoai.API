@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Web;
 using System.Web.Http;
 
 namespace DanhBaDienThoai.API.Controllers
@@ -19,7 +20,8 @@ namespace DanhBaDienThoai.API.Controllers
 		/// <returns>Message from server</returns>
 		public HttpResponseMessage Get()
 		{
-			return Response(new StringContent("<h2>Welcome to DanhBaDienThoai.API</br>You must include authentication in your request.</h2>"), "text/html");
+			var user = HttpContext.Current.User;
+			return Response(new StringContent($"<h2>Xin chào {user.Identity.Name}</h2></br>Tại đây không có gì để bạn dùng."), "text/html");
 		}
 
 		private HttpResponseMessage Response(HttpContent content, string header)
@@ -41,7 +43,7 @@ namespace DanhBaDienThoai.API.Controllers
 		public IHttpActionResult Post(DangNhap dangNhap)
 		{
 			if (!ModelState.IsValid)
-				return BadRequest("Invalid data.");
+				return BadRequest("Invalid request");
 			if (DangNhap.CreateAccount(dangNhap))
 				return Ok();
 			return BadRequest();
@@ -56,7 +58,7 @@ namespace DanhBaDienThoai.API.Controllers
 		public IHttpActionResult Put(DangNhap dangNhap)
 		{
 			if (!ModelState.IsValid)
-				return BadRequest("Invalid data.");
+				return BadRequest("Invalid request");
 			if (DangNhap.UpdateAccount(dangNhap))
 				return Ok();
 			return NotFound();
@@ -70,8 +72,8 @@ namespace DanhBaDienThoai.API.Controllers
 		/// <returns>Code: 200 or 400 or 404</returns>
 		public IHttpActionResult Delete(string username)
 		{
-			if (!ModelState.IsValid)
-				return BadRequest("Invalid data.");
+			if (!ModelState.IsValid || !HttpContext.Current.User.Identity.Name.Equals(username, StringComparison.OrdinalIgnoreCase))
+				return BadRequest("Invalid request");
 			if (DangNhap.DeleteAccount(username))
 				return Ok();
 			return NotFound();

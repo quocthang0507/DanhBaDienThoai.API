@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 
 namespace DataAccess.Classes
 {
@@ -12,6 +14,8 @@ namespace DataAccess.Classes
 		public string SoDienThoai { get; set; }
 		public string Email { get; set; }
 		public string DiaChi { get; set; }
+
+		private const string cacheKey = "thongtinlienhe";
 
 		public ThongTinLienHe()
 		{
@@ -30,13 +34,25 @@ namespace DataAccess.Classes
 		}
 
 		public static List<ThongTinLienHe> GetAll()
-			=> CBO.FillCollection<ThongTinLienHe>(DataProvider.Instance.ExecuteReader("GetAll"));
+		{
+			List<ThongTinLienHe> data = DataCache.GetCache(cacheKey) as List<ThongTinLienHe>;
+			if (data == null)
+			{
+				data = CBO.FillCollection<ThongTinLienHe>(DataProvider.Instance.ExecuteReader("GetAll"));
+				if (data != null && data.Count > 0)
+				{
+					data.TrimExcess();
+					DataCache.SetCache(cacheKey, data);
+				}
+			}
+			return data;
+		}
 
 		public static ThongTinLienHe GetByID(int id)
 		{
 			try
 			{
-				return CBO.FillObject<ThongTinLienHe>(DataProvider.Instance.ExecuteReader("GetByID", id));
+				return GetAll().Find(delegate (ThongTinLienHe t) { return t.ID == id; });
 			}
 			catch (Exception)
 			{
@@ -44,11 +60,11 @@ namespace DataAccess.Classes
 			}
 		}
 
-		public static ThongTinLienHe GetByName(string name)
+		public static List<ThongTinLienHe> GetByName(string name)
 		{
 			try
 			{
-				return CBO.FillObject<ThongTinLienHe>(DataProvider.Instance.ExecuteReader("GetByName", name));
+				return GetAll().Where(t => t.HoTen.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
 			}
 			catch (Exception)
 			{
@@ -56,11 +72,11 @@ namespace DataAccess.Classes
 			}
 		}
 
-		public static ThongTinLienHe GetByNickname(string nickname)
+		public static List<ThongTinLienHe> GetByNickname(string nickname)
 		{
 			try
 			{
-				return CBO.FillObject<ThongTinLienHe>(DataProvider.Instance.ExecuteReader("GetByNickname", nickname));
+				return GetAll().Where(t => t.BietDanh.IndexOf(nickname, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
 			}
 			catch (Exception)
 			{
@@ -70,24 +86,26 @@ namespace DataAccess.Classes
 
 		public static bool InsertContact(ThongTinLienHe lienHe)
 		{
-			return DataProvider.Instance.ExecuteNonQuery("InsertContact", lienHe.HoTen, lienHe.BietDanh, lienHe.NgaySinh, lienHe.SoDienThoai, lienHe.Email, lienHe.DiaChi) > 0;
+			bool result = DataProvider.Instance.ExecuteNonQuery("InsertContact", lienHe.HoTen, lienHe.BietDanh, lienHe.NgaySinh, lienHe.SoDienThoai, lienHe.Email, lienHe.DiaChi) > 0;
+			if (result)
+				DataCache.RemoveCache(cacheKey);
+			return result;
 		}
 
 		public static bool UpdateContact(ThongTinLienHe lienHe)
 		{
-			return DataProvider.Instance.ExecuteNonQuery("UpdateContact", lienHe.ID, lienHe.HoTen, lienHe.BietDanh, lienHe.NgaySinh, lienHe.SoDienThoai, lienHe.Email, lienHe.DiaChi) > 0;
+			bool result = DataProvider.Instance.ExecuteNonQuery("UpdateContact", lienHe.ID, lienHe.HoTen, lienHe.BietDanh, lienHe.NgaySinh, lienHe.SoDienThoai, lienHe.Email, lienHe.DiaChi) > 0;
+			if (result)
+				DataCache.RemoveCache(cacheKey);
+			return result;
 		}
 
 		public static bool DeleteContact(int id)
 		{
-			try
-			{
-				return DataProvider.Instance.ExecuteNonQuery("DeleteContact", id) > 0;
-			}
-			catch (Exception)
-			{
-				return false;
-			}
+			bool result = DataProvider.Instance.ExecuteNonQuery("DeleteContact", id) > 0;
+			if (result)
+				DataCache.RemoveCache(cacheKey);
+			return result;
 		}
 	}
 }
