@@ -27,7 +27,7 @@ namespace DanhBaDienThoai.API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Code: 200 or 404</returns>
-        [Route("api/{DanhBa}/{id}")]
+        [Route("api/DanhBa/{id}")]
         public IHttpActionResult Get(int id)
         {
             var entity = ThongTinLienHe.GetByID(id);
@@ -43,7 +43,7 @@ namespace DanhBaDienThoai.API.Controllers
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/{DanhBa}/{GetByName}/{name}")]
+        [Route("api/DanhBa/GetByName/{name}")]
         public IHttpActionResult GetByName(string name)
         {
             var entities = ThongTinLienHe.GetByName(name);
@@ -59,7 +59,7 @@ namespace DanhBaDienThoai.API.Controllers
         /// <param name="name"></param>
         /// <returns></returns>
         [HttpGet]
-        [Route("api/{DanhBa}/{GetByNickname}/{name}")]
+        [Route("api/DanhBa/GetByNickname/{name}")]
         public IHttpActionResult GetByNickname(string name)
         {
             var entities = ThongTinLienHe.GetByNickname(name);
