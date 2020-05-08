@@ -19,10 +19,11 @@
                 @Html.ActionLink("Danh bạ điện thoại", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Trang chủ", "Index", "Home", new { area = "" }, null)</li>
-                    <li>@Html.ActionLink("Các API", "Index", "Help", new { area = "" }, null)</li>
-                </ul>
+				<ul class="nav navbar-nav">
+					<li>@Html.ActionLink("Trang chủ", "Index", "Home", new { area = "" }, null)</li>
+					<li>@Html.ActionLink("Các API", "Index", "Help", new { area = "" }, null)</li>
+					<li><a href="~/swagger">Swagger</a></li>
+				</ul>
             </div>
         </div>
     </div>
