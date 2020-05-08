@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text;
 using System.Web;
 using System.Web.Http;
 
@@ -21,14 +22,14 @@ namespace DanhBaDienThoai.API.Controllers
 		public HttpResponseMessage Get()
 		{
 			var user = HttpContext.Current.User;
-			return Response(new StringContent($"<h2>Xin chào {user.Identity.Name}</h2></br>Tại đây không có gì để bạn dùng."), "text/html");
+			return Response($"<h2>Xin chào {user.Identity.Name}</h2></br>Tại đây không có gì để bạn dùng.", "text/html");
 		}
 
-		private HttpResponseMessage Response(HttpContent content, string header)
+		private HttpResponseMessage Response(string content, string header)
 		{
 			var response = new HttpResponseMessage(HttpStatusCode.OK)
 			{
-				Content = content
+				Content = new StringContent(content, Encoding.UTF8)
 			};
 			response.Content.Headers.ContentType = new MediaTypeHeaderValue(header);
 			return response;
@@ -68,13 +69,13 @@ namespace DanhBaDienThoai.API.Controllers
 		/// DELETE api/TaiKhoan
 		/// Deletes an account that exists in server
 		/// </summary>
-		/// <param name="username"></param>
+		/// <param name="name"></param>
 		/// <returns>Code: 200 or 400 or 404</returns>
-		public IHttpActionResult Delete(string username)
+		public IHttpActionResult Delete(string name)
 		{
-			if (!ModelState.IsValid || !HttpContext.Current.User.Identity.Name.Equals(username, StringComparison.OrdinalIgnoreCase))
+			if (!ModelState.IsValid || !HttpContext.Current.User.Identity.Name.Equals(name, StringComparison.OrdinalIgnoreCase))
 				return BadRequest("Invalid request");
-			if (DangNhap.DeleteAccount(username))
+			if (DangNhap.DeleteAccount(name))
 				return Ok();
 			return NotFound();
 		}

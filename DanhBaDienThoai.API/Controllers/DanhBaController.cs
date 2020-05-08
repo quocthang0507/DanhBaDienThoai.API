@@ -1,6 +1,8 @@
 ﻿using DanhBaDienThoai.API.Models;
 using DataAccess.Classes;
+using System;
 using System.Net.Http;
+using System.Web;
 using System.Web.Http;
 
 namespace DanhBaDienThoai.API.Controllers
@@ -10,7 +12,7 @@ namespace DanhBaDienThoai.API.Controllers
     {
         /// <summary>
         /// GET api/DanhBa
-        /// Get all contacts in SQL Server
+        /// Gets all contacts in SQL Server
         /// </summary>
         /// <returns>Code: 200</returns>
         public IHttpActionResult Get()
@@ -21,7 +23,7 @@ namespace DanhBaDienThoai.API.Controllers
 
         /// <summary>
         /// GET api/DanhBa/id
-        /// Get contact by id
+        /// Gets contact by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Code: 200 or 404</returns>
@@ -33,6 +35,12 @@ namespace DanhBaDienThoai.API.Controllers
             return Ok(entity);
         }
 
+        /// <summary>
+        /// GET api/DanhBa/GetByName/name
+        /// Gets contacts whose name matches
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         [HttpGet]
         public IHttpActionResult GetByName(string name)
         {
@@ -40,6 +48,66 @@ namespace DanhBaDienThoai.API.Controllers
             if (entities == null)
                 return NotFound();
             return Ok(entities);
+        }
+
+        /// <summary>
+        /// GET api/DanhBa/GetByNickname/name
+        /// Gets contact whose nickname matches
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public IHttpActionResult GetByNickname(string name)
+        {
+            var entities = ThongTinLienHe.GetByNickname(name);
+            if (entities == null)
+                return NotFound();
+            return Ok(entities);
+        }
+
+        /// <summary>
+        /// POST api/DanhBa
+        /// Inserts a contact to server
+        /// </summary>
+        /// <param name="lienHe"></param>
+        /// <returns>Code: 400 or 200</returns>
+        public IHttpActionResult Post(ThongTinLienHe lienHe)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid request");
+            if (ThongTinLienHe.InsertContact(lienHe))
+                return Ok();
+            return BadRequest();
+        }
+
+        /// <summary>
+        /// PUT api/TaiKhoan
+        /// Updates a contact that exists in server
+        /// </summary>
+        /// <param name="dangNhap"></param>
+        /// <returns>Code: 200 or 400 or 404</returns>
+        public IHttpActionResult Put(ThongTinLienHe lienHe)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid request");
+            if (ThongTinLienHe.UpdateContact(lienHe))
+                return Ok();
+            return NotFound();
+        }
+
+        /// <summary>
+        /// DELETE api/TaiKhoan/id
+        /// Deletes a contact that exists in server
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns>Code: 200 or 400 or 404</returns>
+        public IHttpActionResult Delete(int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest("Invalid request");
+            if (ThongTinLienHe.DeleteContact(id))
+                return Ok();
+            return NotFound();
         }
     }
 }
