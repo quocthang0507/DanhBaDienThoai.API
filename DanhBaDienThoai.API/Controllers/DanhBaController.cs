@@ -84,7 +84,7 @@ namespace DanhBaDienThoai.API.Controllers
         }
 
         /// <summary>
-        /// PUT api/TaiKhoan
+        /// PUT api/DanhBa
         /// Updates a contact that exists in server
         /// </summary>
         /// <param name="dangNhap"></param>
@@ -99,11 +99,12 @@ namespace DanhBaDienThoai.API.Controllers
         }
 
         /// <summary>
-        /// DELETE api/TaiKhoan/id
+        /// DELETE api/DanhBa/id
         /// Deletes a contact that exists in server
         /// </summary>
         /// <param name="id"></param>
         /// <returns>Code: 200 or 400 or 404</returns>
+        [Route("api/DanhBa/{id}")]
         public IHttpActionResult Delete(int id)
         {
             if (!ModelState.IsValid)
