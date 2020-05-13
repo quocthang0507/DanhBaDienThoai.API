@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataAccess", "DataAccess\Da
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DanhBaDienThoai.API", "DanhBaDienThoai.API\DanhBaDienThoai.API.csproj", "{67AE6C21-CB15-4B84-AE4E-2EC23B1C7365}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DanhBaDienThoai.API.Tests", "DanhBaDienThoai.API.Tests\DanhBaDienThoai.API.Tests.csproj", "{2C51A43E-C77B-4096-9B44-66F8D2D116C3}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{67AE6C21-CB15-4B84-AE4E-2EC23B1C7365}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{67AE6C21-CB15-4B84-AE4E-2EC23B1C7365}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{67AE6C21-CB15-4B84-AE4E-2EC23B1C7365}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2C51A43E-C77B-4096-9B44-66F8D2D116C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2C51A43E-C77B-4096-9B44-66F8D2D116C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2C51A43E-C77B-4096-9B44-66F8D2D116C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2C51A43E-C77B-4096-9B44-66F8D2D116C3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
