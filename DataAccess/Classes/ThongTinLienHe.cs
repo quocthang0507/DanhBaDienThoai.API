@@ -38,7 +38,7 @@ namespace DataAccess.Classes
 			List<ThongTinLienHe> data = DataCache.GetCache(cacheKey) as List<ThongTinLienHe>;
 			if (data == null)
 			{
-				data = CBO.FillCollection<ThongTinLienHe>(DataProvider.Instance.ExecuteReader("GetAll"));
+				data = SortByName(CBO.FillCollection<ThongTinLienHe>(DataProvider.Instance.ExecuteReader("GetAll")));
 				if (data != null && data.Count > 0)
 				{
 					data.TrimExcess();
@@ -52,7 +52,7 @@ namespace DataAccess.Classes
 		{
 			try
 			{
-				return GetAll().Find(delegate (ThongTinLienHe t) { return t.ID == id; });
+				return GetAll().Find(t => t.ID == id);
 			}
 			catch (Exception)
 			{
@@ -107,5 +107,22 @@ namespace DataAccess.Classes
 				DataCache.RemoveCache(cacheKey);
 			return result;
 		}
+
+		public static List<ThongTinLienHe> SortByName(List<ThongTinLienHe> lienHe)
+		{
+			lienHe.Sort(delegate (ThongTinLienHe lienHe1, ThongTinLienHe lienHe2)
+			{
+				string hoTen1 = lienHe1.HoTen;
+				string hoTen2 = lienHe2.HoTen;
+				string ten1 = hoTen1.Split(' ').Last();
+				string ten2 = hoTen2.Split(' ').Last();
+				if (ten1.Equals(ten2, StringComparison.OrdinalIgnoreCase))
+					return hoTen1.CompareTo(hoTen2);
+				else
+					return ten1.CompareTo(ten2);
+			});
+			return lienHe;
+		}
+
 	}
 }
