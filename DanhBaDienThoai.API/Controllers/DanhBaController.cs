@@ -15,6 +15,7 @@ namespace DanhBaDienThoai.API.Controllers
         /// Gets all contacts in SQL Server
         /// </summary>
         /// <returns>Code: 200</returns>
+        [Route("api/DanhBa")]
         public IHttpActionResult Get()
         {
             var list = ThongTinLienHe.GetAll();
