@@ -8,7 +8,7 @@ namespace DanhBaDienThoai.API
 	{
 		public static void Register(HttpConfiguration config)
 		{
-			// Basic authentication for websites
+			// Basic authentication for website
 			config.Filters.Add(new BasicAuthenticationAttribute());
 
 			// Web API configuration and services
