@@ -124,5 +124,9 @@ namespace DataAccess.Classes
 			return lienHe;
 		}
 
+		public static void ClearCache()
+		{
+			DataCache.RemoveCache(cacheKey);
+		}
 	}
 }

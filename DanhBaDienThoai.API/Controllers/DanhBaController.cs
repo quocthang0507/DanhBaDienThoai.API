@@ -114,5 +114,16 @@ namespace DanhBaDienThoai.API.Controllers
                 return Ok();
             return NotFound();
         }
+
+        /// <summary>
+        /// Resets cache
+        /// </summary>
+        [HttpGet]
+        [Route("api/DanhBa/Reset")]
+        public IHttpActionResult ResetCache()
+        {
+            ThongTinLienHe.ClearCache();
+            return Ok();
+        }
     }
 }
