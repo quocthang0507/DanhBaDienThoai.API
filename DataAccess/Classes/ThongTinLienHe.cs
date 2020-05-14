@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Text.RegularExpressions;
 
 namespace DataAccess.Classes
 {
@@ -63,7 +65,8 @@ namespace DataAccess.Classes
 		{
 			try
 			{
-				return GetAll().Where(t => t.HoTen.IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+				name = ConvertVNM(name);
+				return GetAll().Where(t => ConvertVNM(t.HoTen).IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
 			}
 			catch (Exception)
 			{
@@ -75,7 +78,8 @@ namespace DataAccess.Classes
 		{
 			try
 			{
-				return GetAll().Where(t => t.BietDanh.IndexOf(nickname, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+				nickname = ConvertVNM(nickname);
+				return GetAll().Where(t => ConvertVNM(t.BietDanh).IndexOf(nickname, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
 			}
 			catch (Exception)
 			{
@@ -123,9 +127,11 @@ namespace DataAccess.Classes
 			return lienHe;
 		}
 
-		public static void ClearCache()
+		public static string ConvertVNM(string text)
 		{
-			DataCache.RemoveCache(cacheKey);
+			Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
+			string temp = text.Normalize(NormalizationForm.FormD);
+			return regex.Replace(temp, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
 		}
 	}
 }
