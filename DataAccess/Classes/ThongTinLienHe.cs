@@ -52,7 +52,7 @@ namespace DataAccess.Classes
 		{
 			try
 			{
-				return GetAll().Find(t => t.ID == id);
+				return GetAll().FindLast(t => t.ID == id);
 			}
 			catch (Exception)
 			{
