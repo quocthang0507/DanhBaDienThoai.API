@@ -1,8 +1,5 @@
 ﻿using DanhBaDienThoai.API.Models;
 using DataAccess.Classes;
-using System;
-using System.Net.Http;
-using System.Web;
 using System.Web.Http;
 
 namespace DanhBaDienThoai.API.Controllers
@@ -75,6 +72,7 @@ namespace DanhBaDienThoai.API.Controllers
         /// </summary>
         /// <param name="lienHe"></param>
         /// <returns>Code: 400 or 200</returns>
+        [Route("api/DanhBa")]
         public IHttpActionResult Post(ThongTinLienHe lienHe)
         {
             if (!ModelState.IsValid)
@@ -90,6 +88,7 @@ namespace DanhBaDienThoai.API.Controllers
         /// </summary>
         /// <param name="dangNhap"></param>
         /// <returns>Code: 200 or 400 or 404</returns>
+        [Route("api/DanhBa")]
         public IHttpActionResult Put(ThongTinLienHe lienHe)
         {
             if (!ModelState.IsValid)
@@ -113,17 +112,6 @@ namespace DanhBaDienThoai.API.Controllers
             if (ThongTinLienHe.DeleteContact(id))
                 return Ok();
             return NotFound();
-        }
-
-        /// <summary>
-        /// Resets cache
-        /// </summary>
-        [HttpGet]
-        [Route("api/DanhBa/Reset")]
-        public IHttpActionResult ResetCache()
-        {
-            ThongTinLienHe.ClearCache();
-            return Ok();
         }
     }
 }
