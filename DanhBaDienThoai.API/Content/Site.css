@@ -24,7 +24,12 @@ textarea {
 	text-align: center;
 	margin: auto;
 	display: block;
+	transition: width 2s, height 2s, transform 2s;
 }
+
+	.avatar:hover {
+		transform: rotate(360deg);
+	}
 
 .card-header {
 	text-align: center;

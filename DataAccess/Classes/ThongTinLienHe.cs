@@ -65,8 +65,8 @@ namespace DataAccess.Classes
 		{
 			try
 			{
-				name = ConvertVNM(name);
-				return GetAll().Where(t => ConvertVNM(t.HoTen).IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+				name = TransformString(name);
+				return GetAll().Where(t => TransformString(t.HoTen).IndexOf(name, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
 			}
 			catch (Exception)
 			{
@@ -78,8 +78,8 @@ namespace DataAccess.Classes
 		{
 			try
 			{
-				nickname = ConvertVNM(nickname);
-				return GetAll().Where(t => ConvertVNM(t.BietDanh).IndexOf(nickname, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+				nickname = TransformString(nickname);
+				return GetAll().Where(t => TransformString(t.BietDanh).IndexOf(nickname, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
 			}
 			catch (Exception)
 			{
@@ -127,7 +127,7 @@ namespace DataAccess.Classes
 			return lienHe;
 		}
 
-		public static string ConvertVNM(string text)
+		public static string TransformString(string text)
 		{
 			Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
 			string temp = text.Normalize(NormalizationForm.FormD);

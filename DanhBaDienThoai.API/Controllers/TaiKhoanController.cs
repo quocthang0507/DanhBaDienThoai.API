@@ -7,11 +7,14 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Web;
 using System.Web.Http;
+using System.Web.Http.Description;
 
 namespace DanhBaDienThoai.API.Controllers
 {
 	[BasicAuthentication]
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
 	public class TaiKhoanController : ApiController
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 	{
 		/// <summary>
 		/// GET api/TaiKhoan
@@ -20,7 +23,7 @@ namespace DanhBaDienThoai.API.Controllers
 		public HttpResponseMessage Get()
 		{
 			var user = HttpContext.Current.User;
-			return Response($"<h2>Xin chào {user.Identity.Name}</h2></br>Tại đây không có gì để bạn dùng.", "text/html");
+			return Response($"Hello {user.Identity.Name}", "text/html");
 		}
 
 		private HttpResponseMessage Response(string content, string header)
@@ -34,8 +37,8 @@ namespace DanhBaDienThoai.API.Controllers
 		}
 
 		/// <summary>
-		/// POST api/TaiKhoan
-		/// Creates an account in server
+		/// POST api/TaiKhoan<br/>
+		/// Creates an login account in server
 		/// </summary>
 		/// <param name="dangNhap">Your login info</param>
 		/// <returns>Code: 200 or 400</returns>
@@ -49,10 +52,10 @@ namespace DanhBaDienThoai.API.Controllers
 		}
 
 		/// <summary>
-		/// PUT api/TaiKhoan
+		/// PUT api/TaiKhoan<br/>
 		/// Updates an account that exists in server
 		/// </summary>
-		/// <param name="dangNhap"></param>
+		/// <param name="dangNhap">A json string that is defined as a DangNhap object</param>
 		/// <returns>Code: 200 or 400 or 404</returns>
 		public IHttpActionResult Put(DangNhap dangNhap)
 		{
@@ -64,10 +67,10 @@ namespace DanhBaDienThoai.API.Controllers
 		}
 
 		/// <summary>
-		/// DELETE api/TaiKhoan
-		/// Deletes an account that exists in server
+		/// DELETE api/TaiKhoan<br/>
+		/// Deletes an account that exists in server, you only delete your account
 		/// </summary>
-		/// <param name="name"></param>
+		/// <param name="name">Username</param>
 		/// <returns>Code: 200 or 400 or 404</returns>
 		public IHttpActionResult Delete(string name)
 		{
