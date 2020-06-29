@@ -131,7 +131,7 @@ namespace DataAccess.Classes
 		{
 			Regex regex = new Regex("\\p{IsCombiningDiacriticalMarks}+");
 			string temp = text.Normalize(NormalizationForm.FormD);
-			return regex.Replace(temp, String.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
+			return regex.Replace(temp, string.Empty).Replace('\u0111', 'd').Replace('\u0110', 'D');
 		}
 	}
 }
